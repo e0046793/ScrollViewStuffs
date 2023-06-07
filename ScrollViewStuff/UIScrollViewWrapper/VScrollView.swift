@@ -30,7 +30,7 @@ struct VScrollView<Content: View>: UIViewRepresentable {
         
         let scrollView = UIScrollView()
         scrollView.delegate = coordinator
-        scrollView.contentInset.bottom = .zero
+        scrollView.contentInsetAdjustmentBehavior = .never
         
         let hostingController = UIHostingController(rootView: content)
         let hostedView = hostingController.view!
@@ -46,7 +46,6 @@ struct VScrollView<Content: View>: UIViewRepresentable {
         // this is important for scrolling
         hostedView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor).isActive = true
         
-        content.environment(\., <#T##value: V##V#>)
         return scrollView
     }
     

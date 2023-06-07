@@ -18,68 +18,54 @@ struct ContentView: View {
     @State private var offset: CGPoint = .zero
     
     var body: some View {
-//        ZStack(alignment: .top) {
-//            // Hero image
-//            Image(systemName: "globe")
-//                .resizable()
-//                .scaledToFit()
-//                .frame(height: 300)
-//
-//            // Tab bar
-//            HStack(spacing: 20) {
-//                Button("Tab 1") {
-//                    selection = 0
-//                }
-//
-//                Button("Tab 2") {
-//                    selection = 1
-//                }
-//            }
-//            .frame(maxWidth: .infinity)
-//            .frame(height: 50)
-//            .padding(.horizontal)
-//            .background(.thinMaterial)
-//            .offset(y: max(250-model.tabBarYOffset, .zero))
-//            .zIndex(1)
-//
-//            // Tab content
-//            TabView(selection: $selection) {
-//                TabContentVScrollView {
-//                    ForEach(0..<100) { idx in
-//                        Text("Tab \(selection + 1) - Line at \(idx)")
-//                            .frame(maxWidth: .infinity)
-//                    }
-//
-//                }
-//                .tag(0)
-//
-//                TabContentVScrollView {
-//                    ForEach(0..<100) { idx in
-//                        Text("Tab \(selection + 1) - Line at \(idx)")
-//                            .frame(maxWidth: .infinity)
-//                    }
-//                }
-//                .tag(1)
-//            }
-//            .environmentObject(model)
-//            .tabViewStyle(.page(indexDisplayMode: .never))
-//            .edgesIgnoringSafeArea(.bottom)
-//        }
-        VScrollView(offset: $offset) {
-            VStack(spacing: .zero) {
-                // Transparency
-                Color.clear
-                    .frame(height: 300)
-                // Main content
-                ForEach(0..<50) { idx in
-                    Text("Tab \(selection + 1) - Line at \(idx)")
-                        .frame(maxWidth: .infinity)
+        ZStack(alignment: .top) {
+            // Hero image
+            Image(systemName: "globe")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 300)
+
+            // Tab bar
+            HStack(spacing: 20) {
+                Button("Tab 1") {
+                    selection = 0
+                }
+
+                Button("Tab 2") {
+                    selection = 1
                 }
             }
-            .frame(maxHeight: .infinity)
-            .background(Color.green)
+            .frame(maxWidth: .infinity)
+            .frame(height: 50)
+            .padding(.horizontal)
+            .background(.thinMaterial)
+            .offset(y: max(250-model.tabBarYOffset, .zero))
+            .zIndex(1)
+
+            // Tab content
+            TabView(selection: $selection) {
+                TabContentVScrollView {
+                    ForEach(0..<100) { idx in
+                        Text("Tab \(selection + 1) - Line at \(idx)")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .background(Color.yellow)
+                }
+                .tag(0)
+
+                TabContentVScrollView {
+                    ForEach(0..<100) { idx in
+                        Text("Tab \(selection + 1) - Line at \(idx)")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .background(Color.green)
+                }
+                .tag(1)
+            }
+            .environmentObject(model)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .edgesIgnoringSafeArea(.bottom)
         }
-        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
@@ -108,8 +94,6 @@ struct TabContentVScrollView<Content: View>: View {
                 // Main content
                 content
             }
-            .background(Color.green)
-            .edgesIgnoringSafeArea(.bottom)
         }
         .onChange(of: offset.y) { newValue in
             model.tabBarYOffset = newValue
@@ -118,7 +102,6 @@ struct TabContentVScrollView<Content: View>: View {
             offset.y = model.tabBarYOffset
             print("--> onAppear \(offset.y)")
         }
-        .background(Color.red)
         .edgesIgnoringSafeArea(.bottom)
     }
 }
